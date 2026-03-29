@@ -2,7 +2,7 @@
 
 ## Équipe
 - **Membre 1** : [SITTININAE Aditya]
-- **Membre 2** : [Nom Lény]
+- **Membre 2** : [MOISANT Lény]
 - **Membre 3** : [TCHOUANGOU Louis]
 
 ## Synthèse du Sprint I
