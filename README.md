@@ -1,10 +1,11 @@
 # SAE 2.02 - Exploration Algorithmique (Graphes de dépendances)
 
 ## Équipe
+GROUPE 108
 - **Membre 1** : SITTININAE Aditya
 - **Membre 2** : MOISANT Lény
 - **Membre 3** : TCHOUANGOU Louis
-- **Membre 3** : MUHAMMAD MAJHARUL ISLAM Shafi
+- **Membre 4** : MUHAMMAD MAJHARUL ISLAM Shafi
   
 ## Synthèse du Sprint I : Représentation des graphes
 L'objectif de ce sprint était de créer deux structures pour représenter des graphes orientés où les sommets sont des chaînes de caractères (noms de classes/paquetages).
