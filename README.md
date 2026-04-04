@@ -1,24 +1,50 @@
-# SAE 2.02 - Exploration Algorithmique (Graphes de dépendances)
+# SAE 2.02 – Exploration Algorithmique d'un Problème
 
-## Équipe
-GROUPE 108
-- **Membre 1** : SITTININAE Aditya
-- **Membre 2** : MOISANT Lény
-- **Membre 3** : TCHOUANGOU Louis
-- **Membre 4** : MUHAMMAD MAJHARUL ISLAM Shafi
-  
-## Synthèse du Sprint I : Représentation des graphes
-L'objectif de ce sprint était de créer deux structures pour représenter des graphes orientés où les sommets sont des chaînes de caractères (noms de classes/paquetages).
+## Composition de l'équipe 
 
-### 1. Matrice d'Adjacence (`GrapheMatrice`)
-* **Principe** : Utilise un tableau à deux dimensions (`String[][]`). 
-* **Fonctionnement** : On utilise une `HashMap` pour relier chaque nom de sommet à un numéro de ligne/colonne. 
-* **Arêtes** : La case contient l'étiquette (ex: "create") ou est vide s'il n'y a pas de lien.
+### GROUPE : 108
 
-### 2. Liste d'Adjacence (`GrapheListe`)
-* **Principe** : Chaque sommet possède une liste de ses voisins. 
-* **Fonctionnement** : Utilise une `Map` qui associe un sommet à une liste d'objets contenant la destination et l'étiquette. 
-* **Avantage** : Plus économe en mémoire pour les graphes avec peu de liens.
+| Nom |
+|-----|
+| SITTININAE Aditya |
+| MOISANT Lény |
+| TCHOUANGOU Louis |
+| MUHAMMAD MAJHARUL ISLAM Shafi |
+
+
+## Sprint 1 – Représentation des graphes
+
+### Ce qui a été réalisé
+
+Implémentation de deux classes représentant un **graphe orienté étiqueté**, toutes deux conformes à l'interface `IGraphe` :
+
+- **`GrapheMap`** : représentation par liste d'adjacence via une `HashMap<String, HashMap<String, String>>`. Chaque sommet est associé à une map de ses successeurs avec l'étiquette de l'arête.
+- **`GrapheMatrice`** : représentation par matrice d'adjacence via une `ArrayList<ArrayList<String>>`. Les sommets sont indexés dans une liste, et les cases de la matrice contiennent l'étiquette de l'arête (`null` si aucune arête).
+
+Les deux implémentations supportent :
+- l'ajout et la suppression de sommets et d'arêtes
+- les arêtes avec ou sans étiquette
+- la récupération des successeurs et prédécesseurs d'un sommet
 
 ### Tests
-Les tests unitaires JUnit se trouvent dans les classes `GrapheListeTest` et `GrapheMatriceTest`.
+
+Les tests sont écrits avec **JUnit 5** dans deux classes distinctes :
+- `TestGrapheMap` – tests pour `GrapheMap`
+- `TestGrapheMatrice` – tests pour `GrapheMatrice`
+
+Chaque méthode est couverte par au moins deux tests.
+
+### Structure du projet
+
+```
+src/
+├── Appli/
+│   ├── IGraphe.java
+│   ├── Main.java
+│   └── Graphe/
+│       ├── GrapheMap.java
+│       └── GrapheMatrice.java
+test/
+├── TestGrapheMap.java
+└── TestGrapheMatrice.java
+```
