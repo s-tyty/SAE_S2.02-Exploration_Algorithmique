@@ -1,5 +1,9 @@
 package Appli.Graphe;
 
+import Appli.Exceptions.AreteDejaExistante;
+import Appli.Exceptions.AreteNonExistante;
+import Appli.Exceptions.SommetExisteDeja;
+import Appli.Exceptions.SommetExistePas;
 import Appli.IGraphe;
 
 import java.util.ArrayList;
@@ -29,8 +33,11 @@ public class GrapheMatrice implements IGraphe {
     }
 
     @Override
-    public void ajouterSommet(String nomSommet) {
-        assert (!contientSommet(nomSommet));
+    public void ajouterSommet(String nomSommet) throws SommetExisteDeja {
+        if (contientSommet(nomSommet))
+        {
+            throw new SommetExisteDeja(nomSommet);
+        }
 
         sommets.add(nomSommet);
 
@@ -52,16 +59,28 @@ public class GrapheMatrice implements IGraphe {
     public void ajouterArete(String depart, String arrivee) {
         ajouterArete(depart, arrivee, "");
     }
+
     @Override
-    public void ajouterArete(String depart, String arrivee, String etiquette) {
-        assert (contientSommet(depart) && contientSommet(arrivee) && !contientArete(depart, arrivee));
+    public void ajouterArete(String depart, String arrivee, String etiquette) throws SommetExistePas,AreteDejaExistante{
+        if (!contientSommet(depart)){
+            throw new SommetExistePas(depart);
+        }
+        if (!contientSommet(arrivee)){
+            throw new SommetExistePas(arrivee);
+        }
+        if (contientArete(depart, arrivee)){
+            throw new AreteDejaExistante(depart,arrivee);
+        }
         matriceAdjacence.get(sommets.indexOf(depart))
                 .set(sommets.indexOf(arrivee), etiquette);
     }
 
     @Override
-    public void supprimerSommet(String nomSommet){
-        assert (contientSommet(nomSommet));
+    public void supprimerSommet(String nomSommet) throws SommetExistePas {
+        if (!contientSommet(nomSommet))
+        {
+            throw new SommetExistePas(nomSommet);
+        }
 
         int indice = sommets.indexOf(nomSommet);
         matriceAdjacence.remove(indice);
@@ -72,8 +91,16 @@ public class GrapheMatrice implements IGraphe {
     }
 
     @Override
-    public void supprimerArete(String sommetDepart, String sommetArrivee){
-        assert (contientSommet(sommetDepart) && contientSommet(sommetArrivee) && contientArete(sommetDepart,sommetArrivee));
+    public void supprimerArete(String sommetDepart, String sommetArrivee) throws SommetExistePas, AreteNonExistante{
+        if (!contientSommet(sommetDepart)){
+            throw new SommetExistePas(sommetDepart);
+        }
+        if (!contientSommet(sommetArrivee)){
+            throw new SommetExistePas(sommetArrivee);
+        }
+        if (!contientArete(sommetDepart, sommetArrivee)){
+            throw new AreteNonExistante(sommetDepart,sommetArrivee);
+        }
         matriceAdjacence.get(sommets.indexOf(sommetDepart)).set(sommets.indexOf(sommetArrivee),null);
     }
 
@@ -83,8 +110,11 @@ public class GrapheMatrice implements IGraphe {
     }
 
     @Override
-    public ArrayList<String> listeSuccesseurSommet(String nomSommet) {
-        assert (contientSommet(nomSommet));
+    public ArrayList<String> listeSuccesseurSommet(String nomSommet) throws SommetExistePas {
+        if (!contientSommet(nomSommet))
+        {
+            throw new SommetExistePas(nomSommet);
+        }
         ArrayList<String> listeSuccesseur = new ArrayList<>();
         int n = 0, indiceSommet = sommets.indexOf(nomSommet);
         for (String cellule : matriceAdjacence.get(indiceSommet)) {
@@ -96,8 +126,11 @@ public class GrapheMatrice implements IGraphe {
     }
 
     @Override
-    public ArrayList<String> listePredecesseurSommet(String nomSommet) {
-        assert (contientSommet(nomSommet));
+    public ArrayList<String> listePredecesseurSommet(String nomSommet) throws SommetExistePas{
+        if (!contientSommet(nomSommet))
+        {
+            throw new SommetExistePas(nomSommet);
+        }
         ArrayList<String> listePredecesseur = new ArrayList<>();
         int indiceSommet = sommets.indexOf(nomSommet);
         for (int i = 0; i < matriceAdjacence.size(); i++) {
@@ -111,8 +144,7 @@ public class GrapheMatrice implements IGraphe {
     @Override
     public String getEtiquette(String depart, String arrivee) {
         if (!contientArete(depart, arrivee)) return "";
-        String etiquette = matriceAdjacence.get(sommets.indexOf(depart))
+        return matriceAdjacence.get(sommets.indexOf(depart))
                 .get(sommets.indexOf(arrivee));
-        return etiquette != null ? etiquette : "";
     }
 }

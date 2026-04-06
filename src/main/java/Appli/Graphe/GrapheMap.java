@@ -1,5 +1,9 @@
 package Appli.Graphe;
 
+import Appli.Exceptions.AreteDejaExistante;
+import Appli.Exceptions.AreteNonExistante;
+import Appli.Exceptions.SommetExisteDeja;
+import Appli.Exceptions.SommetExistePas;
 import Appli.IGraphe;
 
 import java.util.ArrayList;
@@ -27,10 +31,12 @@ public class GrapheMap implements IGraphe {
     }
 
     @Override
-    public void ajouterSommet(String nomSommet) {
-        if (!contientSommet(nomSommet)) {
-            adjacence.put(nomSommet, new HashMap<>());
+    public void ajouterSommet(String nomSommet) throws SommetExisteDeja {
+        if (contientSommet(nomSommet))
+        {
+            throw new SommetExisteDeja(nomSommet);
         }
+            adjacence.put(nomSommet, new HashMap<>());
     }
 
     @Override
@@ -39,15 +45,26 @@ public class GrapheMap implements IGraphe {
     }
 
     @Override
-    public void ajouterArete(String depart, String arrivee, String etiquette) {
-        if (contientSommet(depart) && contientSommet(arrivee)) {
-            adjacence.get(depart).put(arrivee, etiquette);
+    public void ajouterArete(String depart, String arrivee, String etiquette) throws SommetExistePas, AreteDejaExistante {
+        if (!contientSommet(depart)){
+            throw new SommetExistePas(depart);
         }
+        if (!contientSommet(arrivee)){
+            throw new SommetExistePas(arrivee);
+        }
+        if (contientArete(depart, arrivee)){
+            throw new AreteDejaExistante(depart,arrivee);
+        }
+        adjacence.get(depart).put(arrivee, etiquette);
+
     }
 
     @Override
-    public void supprimerSommet(String nomSommet) {
-        if (!contientSommet(nomSommet)) return;
+    public void supprimerSommet(String nomSommet) throws SommetExistePas{
+        if (!contientSommet(nomSommet))
+        {
+            throw new SommetExistePas(nomSommet);
+        }
         for (Map<String, String> successeurs : adjacence.values()) {
             successeurs.remove(nomSommet);
         }
@@ -55,10 +72,18 @@ public class GrapheMap implements IGraphe {
     }
 
     @Override
-    public void supprimerArete(String sommetDepart, String sommetArrivee) {
-        if (contientSommet(sommetDepart)) {
-            adjacence.get(sommetDepart).remove(sommetArrivee);
+    public void supprimerArete(String sommetDepart, String sommetArrivee)throws SommetExistePas, AreteNonExistante {
+        if (!contientSommet(sommetDepart)){
+            throw new SommetExistePas(sommetDepart);
         }
+        if (!contientSommet(sommetArrivee)){
+            throw new SommetExistePas(sommetArrivee);
+        }
+        if (!contientArete(sommetDepart, sommetArrivee)){
+            throw new AreteNonExistante(sommetDepart,sommetArrivee);
+        }
+        adjacence.get(sommetDepart).remove(sommetArrivee);
+
     }
 
     @Override
@@ -67,13 +92,20 @@ public class GrapheMap implements IGraphe {
     }
 
     @Override
-    public ArrayList<String> listeSuccesseurSommet(String nomSommet) {
-        if (!contientSommet(nomSommet)) return new ArrayList<>();
+    public ArrayList<String> listeSuccesseurSommet(String nomSommet) throws SommetExistePas {
+        if (!contientSommet(nomSommet))
+        {
+            throw new SommetExistePas(nomSommet);
+        }
         return new ArrayList<>(adjacence.get(nomSommet).keySet());
     }
 
     @Override
-    public ArrayList<String> listePredecesseurSommet(String nomSommet) {
+    public ArrayList<String> listePredecesseurSommet(String nomSommet) throws SommetExistePas {
+        if (!contientSommet(nomSommet))
+        {
+            throw new SommetExistePas(nomSommet);
+        }
         ArrayList<String> predecesseurs = new ArrayList<>();
         for (Map.Entry<String, Map<String, String>> entry : adjacence.entrySet()) {
             if (entry.getValue().containsKey(nomSommet)) {

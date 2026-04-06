@@ -1,10 +1,112 @@
+import Appli.Exceptions.AreteDejaExistante;
+import Appli.Exceptions.AreteNonExistante;
+import Appli.Exceptions.SommetExisteDeja;
+import Appli.Exceptions.SommetExistePas;
 import Appli.Graphe.GrapheMap;
 import Appli.IGraphe;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-public class TestGrapheMap{
+public class TestGrapheMap {
+
+    @Test
+    public void testExceptionAjouterSommet() {
+        IGraphe g = new GrapheMap();
+        g.ajouterSommet("A");
+        assert (g.contientSommet("A"));
+        try {
+            g.ajouterSommet("A");
+            throw new RuntimeException();
+        } catch (SommetExisteDeja _) {}
+    }
+
+    @Test
+    public void testExceptionAjouterArete() {
+        IGraphe g = new GrapheMap();
+        g.ajouterSommet("A");
+        assert (g.contientSommet("A"));
+
+        try {
+            g.ajouterArete("A","B");
+            throw new RuntimeException();
+        } catch (SommetExistePas _) {}
+
+        try {
+            g.ajouterArete("B","A");
+            throw new RuntimeException();
+        } catch (SommetExistePas _) {}
+
+        g.ajouterSommet("B");
+        assert (g.contientSommet("B"));
+        g.ajouterArete("A","B");
+        assert (g.contientArete("A","B"));
+        try {
+            g.ajouterArete("A","B");
+            throw new RuntimeException();
+        } catch (AreteDejaExistante _) {}
+    }
+
+    @Test
+    public void testExceptionSupprimerSommet() {
+        IGraphe g = new GrapheMap();
+        g.ajouterSommet("A");
+        assert (g.contientSommet("A"));
+
+        try {
+            g.supprimerSommet("B");
+            throw new RuntimeException();
+        } catch (SommetExistePas _) {}
+    }
+
+    @Test
+    public void testExceptionSupprimerArete() {
+        IGraphe g = new GrapheMap();
+        g.ajouterSommet("A");
+        assert (g.contientSommet("A"));
+
+        try {
+            g.supprimerArete("A","B");
+            throw new RuntimeException();
+        } catch (SommetExistePas _) {}
+
+        try {
+            g.supprimerArete("B","A");
+            throw new RuntimeException();
+        } catch (SommetExistePas _) {}
+
+        g.ajouterSommet("B");
+        assert (g.contientSommet("B"));
+        try {
+            g.supprimerArete("A","B");
+            throw new RuntimeException();
+        } catch (AreteNonExistante _) {}
+    }
+
+    @Test
+    public void testExceptionListeSuccesseurSommet() {
+        IGraphe g = new GrapheMap();
+        g.ajouterSommet("A");
+        assert (g.contientSommet("A"));
+
+        try {
+            g.listeSuccesseurSommet("B");
+            throw new RuntimeException();
+        } catch (SommetExistePas _) {}
+    }
+
+    @Test
+    public void testExceptionListePredecesseurSommet() {
+        IGraphe g = new GrapheMap();
+        g.ajouterSommet("A");
+        assert (g.contientSommet("A"));
+
+        try {
+            g.listePredecesseurSommet("B");
+            throw new RuntimeException();
+        } catch (SommetExistePas _) {}
+    }
+
 
     @Test
     public void contientSommet_sommetAjoute_retourneVrai() {
@@ -89,6 +191,14 @@ public class TestGrapheMap{
         g.ajouterArete("A", "B");
         g.supprimerArete("A", "B");
         assert (!g.contientArete("A", "B"));
+    }
+
+    @Test
+    public void contientArete_sommetInexistant_retourneFaux() {
+        IGraphe g = new GrapheMap();
+        g.ajouterSommet("A");
+        assert (!g.contientArete("A", "B"));
+        assert (!g.contientArete("B", "A"));
     }
 
 
@@ -247,6 +357,14 @@ public class TestGrapheMap{
         g.ajouterSommet("A");
         g.ajouterSommet("B");
         g.ajouterArete("A", "B");
+        assert ("".equals(g.getEtiquette("A", "B")));
+    }
+
+    @Test
+    public void getEtiquette_areteInexistante_retourneChaineVide() {
+        IGraphe g = new GrapheMap();
+        g.ajouterSommet("A");
+        g.ajouterSommet("B");
         assert ("".equals(g.getEtiquette("A", "B")));
     }
 }
