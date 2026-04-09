@@ -4,13 +4,12 @@
 
 ### GROUPE : 108
 
-| Nom |
-|-----|
+| NOM Prénom |
+|-------|
 | SITTININAE Aditya |
 | MOISANT Lény |
 | TCHOUANGOU Louis |
 | MUHAMMAD MAJHARUL ISLAM Shafi |
-
 
 ## Sprint 1 – Représentation des graphes
 
