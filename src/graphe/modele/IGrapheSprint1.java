@@ -1,14 +1,14 @@
-package Appli;
+package graphe.modele;
 
-import Appli.Exceptions.AreteDejaExistante;
-import Appli.Exceptions.SommetExisteDeja;
-import Appli.Exceptions.SommetExistePas;
-import Appli.Exceptions.AreteNonExistante;
+import graphe.outils.AreteDejaExistante;
+import graphe.outils.SommetExisteDeja;
+import graphe.outils.SommetExistePas;
+import graphe.outils.AreteNonExistante;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public interface IGraphe {
+public interface IGrapheSprint1 {
     boolean contientSommet(String nomSommet);
 
     Boolean contientArete(String sommetDepart, String sommetArrivee);

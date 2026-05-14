@@ -1,22 +1,19 @@
+package graphe.outils;
+
+import graphe.modele.IGraphe;
+import graphe.modele.IEntite;
+import graphe.modele.NatureRelation;
+import graphe.modele.RelationEntrante;
+
+
 import java.util.HashSet;
 import java.util.Set;
 
-
 public final class AlgorithmesGraphe {
-
-    private AlgorithmesGraphe() {
-
-     }
-
-   
-    //  dependantsDirects                                                  //
-    
-     * La relation CONTIENT n'est pas prise en compte
-     * (voir {@link NatureRelation#estDependanceStatique()}).
-     *
-     * @param graphe le graphe à explorer
-     * @param cible  l'entité cible
-     * @return l'ensemble (éventuellement vide) des dépendants directs
+     /**
+     * Retourne les entités qui dépendent directement de la cible
+     * via une seule arête de dépendance statique.
+     * La relation CONTIENT n'est pas prise en compte.
      */
     public static Set<IEntite> dependantsDirects(IGraphe graphe, IEntite cible) {
         Set<IEntite> resultat = new HashSet<>();
@@ -28,16 +25,13 @@ public final class AlgorithmesGraphe {
         return resultat;
     }
 
-    
-    //  dependantsElargis                                                  //
-
-    
-     /**
-     * @param graphe le graphe à explorer
-     * @param cible  l'entité cible
-     * @return l'ensemble élargi des dépendants
+    /**
+     * Retourne les dépendants directs de la cible, puis remonte par contenance :
+     * - à travers les types contenants éventuels ;
+     * - jusqu'au premier paquetage rencontré, inclus ;
+     * - sans jamais remonter au-delà de ce premier paquetage ;
+     * - sans erreur si aucun paquetage englobant n'existe.
      */
-
     public static Set<IEntite> dependantsElargis(IGraphe graphe, IEntite cible) {
         Set<IEntite> directs = dependantsDirects(graphe, cible);
         Set<IEntite> resultat = new HashSet<>(directs);
@@ -48,9 +42,8 @@ public final class AlgorithmesGraphe {
         return resultat;
     }
 
-    
     //  Méthode auxiliaire privée                                         //
-    
+
 
     /**
      * Remonte la hiérarchie de contenance à partir de {@code entite} et
@@ -81,11 +74,20 @@ public final class AlgorithmesGraphe {
      * ou null si aucune n'existe.
      */
     private static IEntite trouverConteneur(IGraphe graphe, IEntite entite) {
+        IEntite packageConteneur = null;
         for (RelationEntrante re : graphe.relationsEntrantes(entite)) {
             if (re.nature() == NatureRelation.CONTIENT) {
-                return re.source();
+                IEntite source = re.source();
+                if (source.estType()) {
+                    return source; // priorité aux types
+                }
+                if (packageConteneur == null) {
+                    packageConteneur = source;
+                }
             }
         }
-        return null;
+        return packageConteneur;
     }
+
+
 }

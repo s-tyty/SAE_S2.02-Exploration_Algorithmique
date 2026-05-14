@@ -1,4 +1,4 @@
-package Appli.Exceptions;
+package graphe.outils;
 
 public class SommetExisteDeja extends RuntimeException {
     public SommetExisteDeja(String sommet) {

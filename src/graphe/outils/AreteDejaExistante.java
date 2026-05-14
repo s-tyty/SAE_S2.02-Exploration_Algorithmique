@@ -1,4 +1,4 @@
-package Appli.Exceptions;
+package graphe.outils;
 
 public class AreteDejaExistante extends RuntimeException {
     public AreteDejaExistante(String depart,String arrivee) {

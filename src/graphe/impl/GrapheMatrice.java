@@ -1,16 +1,16 @@
-package Appli.Graphe;
+package graphe.impl;
 
-import Appli.Exceptions.AreteDejaExistante;
-import Appli.Exceptions.AreteNonExistante;
-import Appli.Exceptions.SommetExisteDeja;
-import Appli.Exceptions.SommetExistePas;
-import Appli.IGraphe;
+import graphe.outils.AreteDejaExistante;
+import graphe.outils.SommetExisteDeja;
+import graphe.outils.SommetExistePas;
+import graphe.outils.AreteNonExistante;
+import graphe.modele.IGrapheSprint1;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class GrapheMatrice implements IGraphe {
+public class GrapheMatrice implements IGrapheSprint1 {
 
     private final List<String> sommets;
     private final ArrayList<ArrayList<String>> matriceAdjacence;

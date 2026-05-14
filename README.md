@@ -1,6 +1,6 @@
 # SAE 2.02 – Exploration Algorithmique d'un Problème
 
-## Composition de l'équipe 
+## Composition de l'équipe
 
 ### GROUPE : 108
 
@@ -15,35 +15,82 @@
 
 ### Ce qui a été réalisé
 
-Implémentation de deux classes représentant un **graphe orienté étiqueté**, toutes deux conformes à l'interface `IGraphe` :
+Implémentation de deux classes représentant un **graphe orienté étiqueté**, toutes deux conformes à l'interface `IGraphe` (version sprint 1) :
 
-- **`GrapheMap`** : représentation par liste d'adjacence via une `HashMap<String, HashMap<String, String>>`. Chaque sommet est associé à une map de ses successeurs avec l'étiquette de l'arête.
-- **`GrapheMatrice`** : représentation par matrice d'adjacence via une `ArrayList<ArrayList<String>>`. Les sommets sont indexés dans une liste, et les cases de la matrice contiennent l'étiquette de l'arête (`null` si aucune arête).
+- **`GrapheMap`** : représentation par liste d'adjacence via une `HashMap<String, HashMap<String, String>>`.
+- **`GrapheMatrice`** : représentation par matrice d'adjacence via une `ArrayList<ArrayList<String>>`.
 
-Les deux implémentations supportent :
-- l'ajout et la suppression de sommets et d'arêtes
-- les arêtes avec ou sans étiquette
-- la récupération des successeurs et prédécesseurs d'un sommet
+Les deux implémentations supportent l'ajout et la suppression de sommets/d'arêtes, les arêtes avec ou sans étiquette, et la récupération des successeurs/prédécesseurs.
 
 ### Tests
 
-Les tests sont écrits avec **JUnit 5** dans deux classes distinctes :
-- `TestGrapheMap` – tests pour `GrapheMap`
-- `TestGrapheMatrice` – tests pour `GrapheMatrice`
+Tests JUnit 5 dans `TestGrapheMap` et `TestGrapheMatrice` : chaque méthode non triviale a au moins deux tests.
 
-Chaque méthode est couverte par au moins deux tests.
+---
 
-### Structure du projet
+## Sprint final (Sprint 2)
 
+### Ce qui a été réalisé
+
+**Exercice A – Implémentation de `IGraphe`**
+- La classe `Graphe` (paquetage `graphe.impl`) implémente complètement l’interface `IGraphe` (graphe orienté avec entités et relations typées).
+- Une classe de test `GrapheTest` hérite de `AbstractIGrapheTest` et valide le comportement (tous les tests passent).
+
+**Exercice B – Algorithmes génériques**
+- `AlgorithmesGraphe.dependantsDirects()` : retourne les entités qui dépendent statiquement de la cible (ignore `CONTIENT`).
+- `AlgorithmesGraphe.dependantsElargis()` : remonte par conteneurs (types puis paquetage) sans dépasser le premier paquetage.
+- Les algorithmes n’utilisent que l’interface `IGraphe`, aucune classe concrète.
+- Tous les tests de `AbstractAlgorithmesGrapheTest` passent (classe `AlgorithmesGrapheTest`).
+
+**Fonctionnalités annexes**
+- Import et export au format PlantUML fonctionnels (`ImporteurPlantUml`, `ExportPlantUml`).
+- Les tests d’import/export (`ImportExportPlantUmlTest`) sont tous verts.
+
+### Ce qui ne marche pas (ou difficultés rencontrées)
+Rien à signaler : toutes les fonctionnalités demandées sont fonctionneles et les tests associées réussissent intégralement.
+
+### Structure du projet 
 ```
 src/
-├── Appli/
-│   ├── IGraphe.java
-│   ├── Main.java
-│   └── Graphe/
-│       ├── GrapheMap.java
-│       └── GrapheMatrice.java
+├── graphe/
+│ ├── ihm/
+│ │ └── Main.java
+│ ├── impl/
+│ │ ├── Entite.java
+│ │ ├── Graphe.java
+│ │ ├── GrapheMap.java
+│ │ ├── GrapheMatrice.java
+│ │ └── TypeEntite.java
+│ ├── modele/
+│ │ ├── IEntite.java
+│ │ ├── IGraphe.java
+│ │ ├── IGrapheSprint1.java
+│ │ ├── NatureRelation.java
+│ │ ├── RelationEntrante.java
+│ │ ├── RelationSortante.java
+│ │ └── UtilsTestGraphe.java
+│ └── outils/
+│ ├── AlgorithmesGraphe.java
+│ ├── AreteDejaExistante.java
+│ ├── AreteNonExistante.java
+│ ├── ExportPlantUml.java
+│ ├── ImporteurPlantUml.java
+│ ├── ParseException.java
+│ ├── SommetExisteDeja.java
+│ └── SommetExistePas.java
 test/
-├── TestGrapheMap.java
-└── TestGrapheMatrice.java
+├── graphe/
+│ ├── impl/
+│ │ ├── GrapheTest.java
+│ │ ├── TestGrapheMap.java
+│ │ └── TestGrapheMatrice.java
+│ ├── modele/
+│ │ ├── AbstractIGrapheTest.java
+│ │ └── AssertsGraphe.java
+│ └── outils/
+│ ├── AbstractAlgorithmesGrapheTest.java
+│ ├── AlgorithmesGrapheTest.java
+│ ├── ImporteurPlantUmlTest.java
+│ └── ImportExportPlantUmlTest.java
+
 ```

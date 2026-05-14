@@ -1,4 +1,4 @@
-package Appli.Exceptions;
+package graphe.outils;
 
 public class SommetExistePas extends RuntimeException {
     public SommetExistePas(String sommet) {

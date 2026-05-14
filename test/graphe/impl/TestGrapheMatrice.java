@@ -1,18 +1,19 @@
-import Appli.Exceptions.AreteDejaExistante;
-import Appli.Exceptions.AreteNonExistante;
-import Appli.Exceptions.SommetExisteDeja;
-import Appli.Exceptions.SommetExistePas;
-import Appli.Graphe.GrapheMap;
-import Appli.IGraphe;
+package graphe.impl;
+
+import graphe.outils.AreteDejaExistante;
+import graphe.outils.SommetExisteDeja;
+import graphe.outils.SommetExistePas;
+import graphe.outils.AreteNonExistante;
+import graphe.modele.IGrapheSprint1;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-public class TestGrapheMap {
+public class TestGrapheMatrice {
 
     @Test
     public void testExceptionAjouterSommet() {
-        IGraphe g = new GrapheMap();
+        IGrapheSprint1 g = new GrapheMatrice();
         g.ajouterSommet("A");
         assert (g.contientSommet("A"));
         try {
@@ -23,7 +24,7 @@ public class TestGrapheMap {
 
     @Test
     public void testExceptionAjouterArete() {
-        IGraphe g = new GrapheMap();
+        IGrapheSprint1 g = new GrapheMatrice();
         g.ajouterSommet("A");
         assert (g.contientSommet("A"));
 
@@ -49,7 +50,7 @@ public class TestGrapheMap {
 
     @Test
     public void testExceptionSupprimerSommet() {
-        IGraphe g = new GrapheMap();
+        IGrapheSprint1 g = new GrapheMatrice();
         g.ajouterSommet("A");
         assert (g.contientSommet("A"));
 
@@ -61,7 +62,7 @@ public class TestGrapheMap {
 
     @Test
     public void testExceptionSupprimerArete() {
-        IGraphe g = new GrapheMap();
+        IGrapheSprint1 g = new GrapheMatrice();
         g.ajouterSommet("A");
         assert (g.contientSommet("A"));
 
@@ -85,7 +86,7 @@ public class TestGrapheMap {
 
     @Test
     public void testExceptionListeSuccesseurSommet() {
-        IGraphe g = new GrapheMap();
+        IGrapheSprint1 g = new GrapheMatrice();
         g.ajouterSommet("A");
         assert (g.contientSommet("A"));
 
@@ -97,7 +98,7 @@ public class TestGrapheMap {
 
     @Test
     public void testExceptionListePredecesseurSommet() {
-        IGraphe g = new GrapheMap();
+        IGrapheSprint1 g = new GrapheMatrice();
         g.ajouterSommet("A");
         assert (g.contientSommet("A"));
 
@@ -110,7 +111,7 @@ public class TestGrapheMap {
 
     @Test
     public void contientSommet_sommetAjoute_retourneVrai() {
-        IGraphe g = new GrapheMap();
+        IGrapheSprint1 g = new GrapheMatrice();
         g.ajouterSommet("A");
         assert (g.contientSommet("A"));
         assert (!g.contientSommet("Z"));
@@ -118,7 +119,7 @@ public class TestGrapheMap {
 
     @Test
     public void contientSommet_apresSupression_retourneFaux() {
-        IGraphe g = new GrapheMap();
+        IGrapheSprint1 g = new GrapheMatrice();
         g.ajouterSommet("A");
         g.ajouterSommet("B");
         g.supprimerSommet("A");
@@ -128,7 +129,7 @@ public class TestGrapheMap {
 
     @Test
     public void ajouterSommet_unSommet_estBienPresent() {
-        IGraphe g = new GrapheMap();
+        IGrapheSprint1 g = new GrapheMatrice();
         g.ajouterSommet("A");
         assert (g.contientSommet("A"));
         assert (!g.contientSommet("B"));
@@ -136,7 +137,7 @@ public class TestGrapheMap {
 
     @Test
     public void ajouterSommet_plusieursSommets_tousPresents() {
-        IGraphe g = new GrapheMap();
+        IGrapheSprint1 g = new GrapheMatrice();
         g.ajouterSommet("A");
         g.ajouterSommet("B");
         g.ajouterSommet("C");
@@ -149,7 +150,7 @@ public class TestGrapheMap {
 
     @Test
     public void supprimerSommet_sommetExistant_nEstPlusPresent() {
-        IGraphe g = new GrapheMap();
+        IGrapheSprint1 g = new GrapheMatrice();
         g.ajouterSommet("A");
         g.ajouterSommet("B");
         g.supprimerSommet("A");
@@ -159,7 +160,7 @@ public class TestGrapheMap {
 
     @Test
     public void supprimerSommet_supprimeLesAretes_associees() {
-        IGraphe g = new GrapheMap();
+        IGrapheSprint1 g = new GrapheMatrice();
         g.ajouterSommet("A");
         g.ajouterSommet("B");
         g.ajouterSommet("C");
@@ -174,7 +175,7 @@ public class TestGrapheMap {
 
     @Test
     public void contientArete_areteAjoutee_retourneVrai() {
-        IGraphe g = new GrapheMap();
+        IGrapheSprint1 g = new GrapheMatrice();
         g.ajouterSommet("A");
         g.ajouterSommet("B");
         g.ajouterArete("A", "B");
@@ -184,7 +185,7 @@ public class TestGrapheMap {
 
     @Test
     public void contientArete_sansBoucleEtApresSupression_retourneFaux() {
-        IGraphe g = new GrapheMap();
+        IGrapheSprint1 g = new GrapheMatrice();
         g.ajouterSommet("A");
         g.ajouterSommet("B");
         assert (!g.contientArete("A", "A"));
@@ -195,7 +196,7 @@ public class TestGrapheMap {
 
     @Test
     public void contientArete_sommetInexistant_retourneFaux() {
-        IGraphe g = new GrapheMap();
+        IGrapheSprint1 g = new GrapheMatrice();
         g.ajouterSommet("A");
         assert (!g.contientArete("A", "B"));
         assert (!g.contientArete("B", "A"));
@@ -204,7 +205,7 @@ public class TestGrapheMap {
 
     @Test
     public void ajouterArete_areteValide_estBienPresente() {
-        IGraphe g = new GrapheMap();
+        IGrapheSprint1 g = new GrapheMatrice();
         g.ajouterSommet("A");
         g.ajouterSommet("B");
         g.ajouterSommet("C");
@@ -216,7 +217,7 @@ public class TestGrapheMap {
 
     @Test
     public void ajouterArete_multiplesAretes_correctementAjoutees() {
-        IGraphe g = new GrapheMap();
+        IGrapheSprint1 g = new GrapheMatrice();
         g.ajouterSommet("A");
         g.ajouterSommet("B");
         g.ajouterSommet("C");
@@ -231,7 +232,7 @@ public class TestGrapheMap {
 
     @Test
     public void supprimerArete_areteExistante_nEstPlusPresente() {
-        IGraphe g = new GrapheMap();
+        IGrapheSprint1 g = new GrapheMatrice();
         g.ajouterSommet("A");
         g.ajouterSommet("B");
         g.ajouterSommet("C");
@@ -244,7 +245,7 @@ public class TestGrapheMap {
 
     @Test
     public void supprimerArete_neSupprimePasAreteInverse() {
-        IGraphe g = new GrapheMap();
+        IGrapheSprint1 g = new GrapheMatrice();
         g.ajouterSommet("A");
         g.ajouterSommet("B");
         g.ajouterArete("A", "B");
@@ -257,7 +258,7 @@ public class TestGrapheMap {
 
     @Test
     public void listeSommet_grapheVide_retourneListeVide() {
-        IGraphe g = new GrapheMap();
+        IGrapheSprint1 g = new GrapheMatrice();
         assert (g.listeSommet().isEmpty());
         g.ajouterSommet("A");
         assert (g.listeSommet().size() == 1);
@@ -266,7 +267,7 @@ public class TestGrapheMap {
 
     @Test
     public void listeSommet_apresSupression_nContientPlusSommet() {
-        IGraphe g = new GrapheMap();
+        IGrapheSprint1 g = new GrapheMatrice();
         g.ajouterSommet("A");
         g.ajouterSommet("B");
         g.ajouterSommet("C");
@@ -281,7 +282,7 @@ public class TestGrapheMap {
 
     @Test
     public void listeSuccesseurSommet_sansArete_retourneListeVide() {
-        IGraphe g = new GrapheMap();
+        IGrapheSprint1 g = new GrapheMatrice();
         g.ajouterSommet("A");
         g.ajouterSommet("B");
         assert (g.listeSuccesseurSommet("A").isEmpty());
@@ -290,7 +291,7 @@ public class TestGrapheMap {
 
     @Test
     public void listeSuccesseurSommet_avecEtSansAretes_retourneCorrectement() {
-        IGraphe g = new GrapheMap();
+        IGrapheSprint1 g = new GrapheMatrice();
         g.ajouterSommet("A");
         g.ajouterSommet("B");
         g.ajouterSommet("C");
@@ -306,7 +307,7 @@ public class TestGrapheMap {
 
     @Test
     public void listeSuccesseurSommet_areteAvecEtiquette_estBienIncluse() {
-        IGraphe g = new GrapheMap();
+        IGrapheSprint1 g = new GrapheMatrice();
         g.ajouterSommet("A");
         g.ajouterSommet("B");
         g.ajouterArete("A", "B", "create");
@@ -317,7 +318,7 @@ public class TestGrapheMap {
 
     @Test
     public void listePredecesseurSommet_sansArete_retourneListeVide() {
-        IGraphe g = new GrapheMap();
+        IGrapheSprint1 g = new GrapheMatrice();
         g.ajouterSommet("A");
         g.ajouterSommet("B");
         assert (g.listePredecesseurSommet("B").isEmpty());
@@ -326,7 +327,7 @@ public class TestGrapheMap {
 
     @Test
     public void listePredecesseurSommet_avecEtSansAretes_retourneCorrectement() {
-        IGraphe g = new GrapheMap();
+        IGrapheSprint1 g = new GrapheMatrice();
         g.ajouterSommet("A");
         g.ajouterSommet("B");
         g.ajouterSommet("C");
@@ -344,7 +345,7 @@ public class TestGrapheMap {
 
     @Test
     public void getEtiquette_areteAvecEtiquette_retourneEtiquette() {
-        IGraphe g = new GrapheMap();
+        IGrapheSprint1 g = new GrapheMatrice();
         g.ajouterSommet("A");
         g.ajouterSommet("B");
         g.ajouterArete("A", "B", "create");
@@ -353,7 +354,7 @@ public class TestGrapheMap {
 
     @Test
     public void getEtiquette_areteSansEtiquette_retourneChaineVide() {
-        IGraphe g = new GrapheMap();
+        IGrapheSprint1 g = new GrapheMatrice();
         g.ajouterSommet("A");
         g.ajouterSommet("B");
         g.ajouterArete("A", "B");
@@ -362,7 +363,7 @@ public class TestGrapheMap {
 
     @Test
     public void getEtiquette_areteInexistante_retourneChaineVide() {
-        IGraphe g = new GrapheMap();
+        IGrapheSprint1 g = new GrapheMatrice();
         g.ajouterSommet("A");
         g.ajouterSommet("B");
         assert ("".equals(g.getEtiquette("A", "B")));

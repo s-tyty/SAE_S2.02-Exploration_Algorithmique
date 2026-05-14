@@ -1,17 +1,17 @@
-package Appli.Graphe;
+package graphe.impl;
 
-import Appli.Exceptions.AreteDejaExistante;
-import Appli.Exceptions.AreteNonExistante;
-import Appli.Exceptions.SommetExisteDeja;
-import Appli.Exceptions.SommetExistePas;
-import Appli.IGraphe;
+import graphe.outils.AreteDejaExistante;
+import graphe.outils.SommetExisteDeja;
+import graphe.outils.SommetExistePas;
+import graphe.outils.AreteNonExistante;
+import graphe.modele.IGrapheSprint1;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class GrapheMap implements IGraphe {
+public class GrapheMap implements IGrapheSprint1 {
 
     private final Map<String, Map<String, String>> adjacence;
 

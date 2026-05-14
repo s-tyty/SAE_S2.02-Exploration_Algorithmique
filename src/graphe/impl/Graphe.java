@@ -1,3 +1,7 @@
+package graphe.impl;
+
+import graphe.modele.*;
+
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -55,7 +59,7 @@ public class Graphe implements IGraphe {
     }
 
     //  Consultation du graphe                                             //
-    
+
 
     @Override
     public Set<IEntite> entites() {
@@ -74,9 +78,9 @@ public class Graphe implements IGraphe {
         return res == null ? Collections.emptySet() : Collections.unmodifiableSet(res);
     }
 
-   
+
     //  Affichage                                                          //
-   
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("Graphe (listes d'adjacence) :\n");
