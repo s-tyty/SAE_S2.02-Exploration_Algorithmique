@@ -48,6 +48,7 @@ Tests JUnit 5 dans `TestGrapheMap` et `TestGrapheMatrice` : chaque méthode non 
 
 ### Ce qui ne marche pas (ou difficultés rencontrées)
 Rien à signaler : toutes les fonctionnalités demandées sont fonctionneles et les tests associées réussissent intégralement.
+Juste pour importer le projet sur IntelliJ il faut mettre `src`  Mark directory as `Sources root` et `test`  Mark directory as `Test Sources root`
 
 ### Structure du projet 
 ```
